@@ -31,6 +31,8 @@ async function getThreeDayForecast(location) {
         console.log({ day });
         return day.date;
       });
+
+      // add to above what needed
       const locationName = response.location.name;
       const locationRegion = response.location.region;
       const locationCountry = response.location.country;
@@ -49,3 +51,9 @@ getThreeDayForecast("manchester");
 // humidity
 // chance of Rain
 // wind speed
+
+const searchButton = document.getElementById("submitSearch");
+const searchBar = document.getElementById("searchBar");
+searchButton.addEventListener("click", () => {
+  getThreeDayForecast(searchBar.value);
+});
