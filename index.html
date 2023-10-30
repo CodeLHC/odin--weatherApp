@@ -5,13 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Weather App</title>
     <link rel="stylesheet" href="style.css" />
-    <script src="index.js" defer></script>
+    <script type="module" src="index.js" defer></script>
   </head>
   <body>
     <form>
-      <label for="SearchBar">Where to?</label>
-      <input type="text" id="SearchBar" />
-      <input id="submitSearch" type="submit" value="Search" />
+      <label for="searchBar">Where to?</label>
+      <input type="text" id="searchBar" />
+      <input id="submitButton" type="submit" value="Search" />
     </form>
+
+    <h1 id="location"></h1>
+    <h1>hi</h1>
+    <h3 id="dateText"></h3>
+    <h2 id="temperature"></h2>
   </body>
 </html>
