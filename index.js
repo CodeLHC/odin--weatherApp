@@ -29,8 +29,15 @@ async function getThreeDayForecast(location) {
     .then(function (response) {
       const threeDayInfo = response.forecast.forecastday;
 
-      const specificInfo = threeDayInfo.map((day) => {
-        return day.date;
+      const specificInfo = threeDayInfo.map(({ date, day }) => {
+        return {
+          date: date,
+          averageTemp: day.avgtemp_c,
+          maxTemp: day.maxtemp_c,
+          minTemp: day.mintemp_c,
+          conditionOverview: day.condition.text,
+          chanceOfRain: day.daily_chance_of_rain,
+        };
       });
 
       // add to above what needed
@@ -38,8 +45,12 @@ async function getThreeDayForecast(location) {
       const locationRegion = response.location.region;
       const locationCountry = response.location.country;
       //   console.log(locationName, locationRegion, locationCountry);
+      console.log(response);
       console.log({ specificInfo });
       domUpdaters.updateLocation(locationName);
+      domUpdaters.updateRegionAndCountry(locationRegion, locationCountry);
+      domUpdaters.updateDate(response.location.localtime);
+      domUpdaters.updateThreeDayOverview(specificInfo);
     });
 }
 
