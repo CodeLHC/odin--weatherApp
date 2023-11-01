@@ -2,3 +2,42 @@
   display: flex;
   gap: 5px;
 }
+
+body {
+  background-image: url("images/pink-sunset.jpg");
+  height: 100%;
+  width: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  font-size: 18px;
+  color: #404040;
+}
+
+.icon {
+  width: 50px;
+  height: 50px;
+}
+
+#forecastIcon {
+  width: 100px;
+  height: 100px;
+}
+
+#forecastText,
+#currentTemp {
+  font-size: 20px;
+}
+
+.today {
+  /* width: 100vh; */
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  /* flex: 1; */
+}
+
+/* .extraOverviewInfo {
+  visibility: hidden;
+} */

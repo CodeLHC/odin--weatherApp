@@ -1,20 +1,5 @@
 import { domUpdaters } from "./domUpdaters.mjs";
-// Write the functions that hit the API. You’re going to want functions
-// that can take a location and return the weather data for that location.
-// For now, just console.log() the information.
-
-// https://api.weatherapi.com/v1/forecast.json?key=4550e8f9b39144c3934144630232610&q=manchester&days=3
-
-// async function getCurrentLocation(location) {
-//   const response = await fetch(
-//     `https://api.weatherapi.com/v1/current.json?key=4550e8f9b39144c3934144630232610&q=${location}`
-//   );
-//   response.json().then(function (response) {
-//     console.log(response);
-//   });
-// }
-
-// getCurrentLocation("manchester");
+// import moment from "moment/moment";
 
 async function getThreeDayForecast(location) {
   const response = await fetch(
@@ -28,8 +13,7 @@ async function getThreeDayForecast(location) {
 
     .then(function (response) {
       const threeDayInfo = response.forecast.forecastday;
-
-      const specificInfo = threeDayInfo.map(({ date, day }) => {
+      const specificOverviewInfo = threeDayInfo.map(({ date, day }) => {
         return {
           date: date,
           averageTemp: day.avgtemp_c,
@@ -40,33 +24,45 @@ async function getThreeDayForecast(location) {
         };
       });
 
-      // add to above what needed
       const locationName = response.location.name;
       const locationRegion = response.location.region;
       const locationCountry = response.location.country;
-      //   console.log(locationName, locationRegion, locationCountry);
+
+      const todaysForecast = {
+        currentTemp: response.current.temp_c,
+        tempFeelsLike: response.current.feelslike_c,
+        humidity: response.current.humidity,
+        windSpeed: response.current.wind_mph,
+        condition: response.current.condition.text,
+        conditionIcon: response.current.condition.icon,
+      };
+
       console.log(response);
-      console.log({ specificInfo });
+      console.log({ specificOverviewInfo });
       domUpdaters.updateLocation(locationName);
       domUpdaters.updateRegionAndCountry(locationRegion, locationCountry);
-      domUpdaters.updateDate(response.location.localtime);
-      domUpdaters.updateThreeDayOverview(specificInfo);
+
+      const dateOptions = {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      };
+      const todaysDateFormatted = new Date(
+        response.location.localtime
+      ).toLocaleDateString("en-GB", dateOptions);
+      const todaysTimeFormatted = new Date(response.location.localtime)
+        .toLocaleTimeString()
+        .slice(0, 5);
+      domUpdaters.updateTodaysDate(todaysDateFormatted, todaysTimeFormatted);
+      domUpdaters.updateTodaysForecast(todaysForecast, specificOverviewInfo);
+      domUpdaters.updateThreeDayOverview(specificOverviewInfo);
     });
 }
-
-// Write the functions that process the JSON data you’re getting
-// from the API and return an object with only the data you require for your app.
-
-// need:
-// temp
-// humidity
-// chance of Rain
-// wind speed
 
 const searchButton = document.getElementById("submitButton");
 const searchBar = document.getElementById("searchBar");
 searchButton.addEventListener("click", (e) => {
   e.preventDefault();
-  console.log("search button greeting");
   getThreeDayForecast(searchBar.value);
 });

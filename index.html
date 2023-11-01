@@ -18,7 +18,38 @@
     <h4 id="regionCountry"></h4>
 
     <h3 id="dateText"></h3>
-    <h2 id="temperature"></h2>
+    <div class="today">
+      <div class="overviewInfo">
+        <img id="forecastIcon" />
+        <div id="forecastText"></div>
+        <div id="currentTemp"></div>
+      </div>
+      <div class="extraOverviewInfo">
+        <div>
+          <img class="icon" src="images/temperature-low-solid.svg" />
+          Feels like
+          <div id="feelsLike"></div>
+        </div>
+        <div>
+          <img class="icon" src="images/smog-solid.svg" />
+          Humidity
+          <div id="humidity"></div>
+        </div>
+
+        <div>
+          <img class="icon" src="images/umbrella-solid.svg" />
+          Chance of Rain
+          <div id="chanceOfRain"></div>
+
+          <div>
+            <img class="icon" src="images/wind-solid.svg" />
+
+            Wind Speed
+            <div id="windSpeed"></div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div id="threeDayOverview"></div>
   </body>
