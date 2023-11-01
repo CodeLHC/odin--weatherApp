@@ -32,8 +32,6 @@ const domUpdaters = (() => {
     const windSpeed = document.getElementById("windSpeed");
     const forecastIcon = document.getElementById("forecastIcon");
     const forecastText = document.getElementById("forecastText");
-    // const extraOverviewInfo =
-    //   document.getElementsByClassName("extraOverviewInfo");
 
     currentTemp.innerText = `${todaysForecastObject.currentTemp}°C`;
     feelsLike.innerText = `${todaysForecastObject.tempFeelsLike}°C`;
@@ -48,15 +46,27 @@ const domUpdaters = (() => {
     const threeDayOverview = document.getElementById("threeDayOverview");
     removeAllChildNodes(threeDayOverview);
     dayArray.forEach((day) => {
+      const weekday = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+      ];
       if (day !== dayArray[0]) {
         const dayOverview = document.createElement("div");
         dayOverview.classList.add("dayOverview");
-        dayOverview.innerText = `${day.date}
-  Average Temperature: ${day.averageTemp}°C
-  Max Temperature: ${day.maxTemp}°C
-  Min Temperature:${day.minTemp}°C
-  Overview of the day:${day.conditionOverview}
-  Chance of rain:${day.chanceOfRain}%`;
+        const icon = document.createElement("img");
+        icon.src = day.conditionIcon;
+        dayOverview.appendChild(icon);
+        const formattedDate = new Date(day.date);
+        const info = document.createElement("div");
+        info.innerText = `${weekday[formattedDate.getUTCDay()]}
+  Max: ${day.maxTemp}°C
+  Min:${day.minTemp}°C`;
+        dayOverview.appendChild(info);
         threeDayOverview.appendChild(dayOverview);
       }
     });

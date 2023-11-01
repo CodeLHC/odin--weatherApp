@@ -1,5 +1,4 @@
 import { domUpdaters } from "./domUpdaters.mjs";
-// import moment from "moment/moment";
 
 async function getThreeDayForecast(location) {
   const response = await fetch(
@@ -20,6 +19,7 @@ async function getThreeDayForecast(location) {
           maxTemp: day.maxtemp_c,
           minTemp: day.mintemp_c,
           conditionOverview: day.condition.text,
+          conditionIcon: day.condition.icon,
           chanceOfRain: day.daily_chance_of_rain,
         };
       });
@@ -60,9 +60,12 @@ async function getThreeDayForecast(location) {
     });
 }
 
+getThreeDayForecast("Manchester");
+
 const searchButton = document.getElementById("submitButton");
 const searchBar = document.getElementById("searchBar");
 searchButton.addEventListener("click", (e) => {
   e.preventDefault();
   getThreeDayForecast(searchBar.value);
+  searchBar.value = "";
 });
