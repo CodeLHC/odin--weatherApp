@@ -1,3 +1,5 @@
+import { helpers } from "./helpers.mjs";
+
 const domUpdaters = (() => {
   const removeAllChildNodes = (parent) => {
     while (parent.firstChild) {
@@ -46,24 +48,14 @@ const domUpdaters = (() => {
     const threeDayOverview = document.getElementById("threeDayOverview");
     removeAllChildNodes(threeDayOverview);
     dayArray.forEach((day) => {
-      const weekday = [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-      ];
       if (day !== dayArray[0]) {
         const dayOverview = document.createElement("div");
         dayOverview.classList.add("dayOverview");
         const icon = document.createElement("img");
         icon.src = day.conditionIcon;
         dayOverview.appendChild(icon);
-        const formattedDate = new Date(day.date);
         const info = document.createElement("div");
-        info.innerText = `${weekday[formattedDate.getUTCDay()]}
+        info.innerText = `${helpers.formatDateToDays(day)}
   Max: ${day.maxTemp}°C
   Min:${day.minTemp}°C`;
         dayOverview.appendChild(info);
